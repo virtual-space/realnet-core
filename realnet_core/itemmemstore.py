@@ -1,14 +1,11 @@
 from .type import Type
 from .item import Item
-from .datastore import DataStore
 from .itemstore import ItemStore
-from .typestore import TypeStore
 
-import copy
 import uuid
 
 
-class MemoryStore(TypeStore, ItemStore, DataStore):
+class ItemMemStore(ItemStore):
 
     def __init__(self):
         self.types = {}
@@ -68,13 +65,4 @@ class MemoryStore(TypeStore, ItemStore, DataStore):
 
     def find_items(self, query, cursor):
         return None
-
-    def put_data(self, id, data):
-        pass
-
-    def get_data(self, id):
-        pass
-
-    def delete_data(self, id):
-        pass
 

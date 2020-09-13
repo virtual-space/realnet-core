@@ -1,12 +1,12 @@
 import unittest
 
-from realnet_core import Item, Type, MemoryStore
+from realnet_core import ItemMemStore
 
 
 class MemoryStoreTestCase(unittest.TestCase):
 
     def test_create_type(self):
-        ms = MemoryStore()
+        ms = ItemMemStore()
 
         t1 = ms.create_type('2', attributes={'three': 'four'})
         t2 = ms.retrieve_type(t1.id)
@@ -15,7 +15,7 @@ class MemoryStoreTestCase(unittest.TestCase):
         self.assertEqual(t2.attributes['three'], 'four')
 
     def test_create_item(self):
-        ms = MemoryStore()
+        ms = ItemMemStore()
 
         t1 = ms.create_type('2', attributes={'three': 'four'})
         i1 = ms.create_item(t1, '6', attributes={'seven': 'eight'})
