@@ -2,6 +2,7 @@ from .type import Type
 import json
 import copy
 
+
 class Item:
     def __init__(self, id, name, type, attributes={}):
         self.id = id
@@ -17,6 +18,19 @@ class Item:
 
     def to_json(self):
         return json.dumps(self.to_dict())
+
+    def __hash__(self):
+        return hash(self.id)
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            # Ignoring .b attribute
+            return self.id == other.id
+        else:
+            return NotImplemented
+
+    def __repr__(self):
+        return "Item(%s, %s, %s, %s)" % (self.id, self.name, self.type.__repr__(), self.attributes)
 
     @classmethod
     def from_dict(cls, data):

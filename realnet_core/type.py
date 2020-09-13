@@ -11,6 +11,34 @@ class Type:
         self.items = items
         self.attributes = attributes
 
+        if id is None and items:
+            self.id = items.__hash__()
+
+
+    def __hash__(self):
+        return hash(self.id)
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            # Ignoring .b attribute
+            return self.id == other.id
+        else:
+            return NotImplemented
+
+    def __repr__(self):
+        if self.name and (self.items or self.attributes):
+            if self.items and self.attributes:
+                return "Type(%s, %s, %s, %s)" % (self.id, self.name, [item.__repr__() for item in self.items], self.attributes)
+            elif self.items:
+                return "Type(%s, %s, %s)" % (self.id, self.name, [item.__repr__() for item in self.items])
+            else:
+                return "Type(%s, %s, %s)" % (self.id, self.name, self.attributes)
+        elif self.name:
+            return "Type(%s, %s)" % (self.id, self.name)
+        else:
+            return "Type(%s)" % (self.id)
+
+
     def create_item(self, id, name, attributes=None):
         return realnet_core.item.Item(id,
                                       name,
@@ -40,3 +68,16 @@ class Type:
                     t['name'],
                     [realnet_core.item.Item.from_dict(item) for item in t['items']],
                     t['attributes'])
+
+    # def myFun(arg1, arg2, arg3):
+    #     print("arg1:", arg1)
+    #     print("arg2:", arg2)
+    #     print("arg3:", arg3)
+    # args = ("Geeks", "for", "Geeks")
+    # myFun(*args)
+    # kwargs = {"arg1": "Geeks", "arg2": "for", "arg3": "Geeks"}
+    # myFun(**kwargs)
+
+    @classmethod
+    def set(cls, *args):
+        pass
