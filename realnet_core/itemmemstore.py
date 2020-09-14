@@ -10,7 +10,6 @@ class ItemMemStore(ItemStore):
     def __init__(self):
         self.types = {}
         self.items = {}
-        self.data = {}
 
     def create_type(self, name, items=None, data=None, attributes=None):
         references = []
