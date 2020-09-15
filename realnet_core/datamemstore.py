@@ -8,7 +8,7 @@ class DataMemStore(DataStore):
     def __init__(self):
         self.data = {}
 
-    def create_data(self, id, data, attributes=None):
+    def create_data(self, data, attributes=None):
 
         id = uuid.uuid4()
         new = Data(id, data, attributes)

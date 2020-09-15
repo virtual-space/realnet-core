@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 class DataStore(ABC):
 
     @abstractmethod
-    def create_data(self, id, data, attributes=None):
+    def create_data(self, data, attributes=None):
         pass
 
     @abstractmethod
