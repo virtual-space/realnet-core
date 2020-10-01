@@ -3,13 +3,14 @@ from .item import Item
 from .itemstore import ItemStore
 
 import uuid
+import json
 
 
 class ItemMemStore(ItemStore):
 
-    def __init__(self):
-        self.types = {}
-        self.items = {}
+    def __init__(self, types={}, items={}):
+        self.types = types
+        self.items = items
 
     def create_type(self, name, items=None, data=None, attributes=None):
         references = []
@@ -64,4 +65,14 @@ class ItemMemStore(ItemStore):
 
     def find_items(self, query, cursor):
         return None
+
+    def save(self, path):
+        with open(path, 'w') as outfile:
+            json.dump({'types': self.types, 'items': self.items}, outfile)
+
+    @classmethod
+    def load(cls, path):
+        with open(path) as json_file:
+            data = json.load(json_file)
+            return ItemMemStore(data['types'], data['items'])
 
