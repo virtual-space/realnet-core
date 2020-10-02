@@ -8,7 +8,8 @@ class Item:
         self.id = id
         self.name = name
         self.type = type
-        self.attributes = dict(list(copy.deepcopy(self.type.attributes).items()) + list(attributes.items()))
+        self.attributes = attributes
+        # self.attributes = dict(list(copy.deepcopy(self.type.attributes).items()) + list(attributes.items()))
 
     def to_dict(self):
         return {'id': self.id,
