@@ -2,6 +2,7 @@ from .type import Type
 from .item import Item
 from .itemstore import ItemStore
 
+import os
 import uuid
 import json
 
@@ -72,7 +73,10 @@ class ItemMemStore(ItemStore):
 
     @classmethod
     def load(cls, path):
-        with open(path) as json_file:
-            data = json.load(json_file)
-            return ItemMemStore(data['types'], data['items'])
+        if os.path.exists(path):
+            with open(path, 'r') as json_file:
+                data = json.load(json_file)
+                return ItemMemStore(data['types'], data['items'])
+        else:
+            return ItemMemStore()
 
