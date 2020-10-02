@@ -93,7 +93,7 @@ class ItemMemStore(ItemStore):
                                        i[1]['type'],
                                        i[1]['attributes']) for i in data['items'].items()}
                 for item in in_items:
-                    in_items[item].type = in_types[item]
+                    in_items[item].type = in_types[in_items[item].type]
 
                 for type in in_types:
                     in_types[type].items = [in_items[item] for item in in_types[type].items]
