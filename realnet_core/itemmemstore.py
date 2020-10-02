@@ -38,7 +38,7 @@ class ItemMemStore(ItemStore):
     def find_types(self, query, cursor):
         return None
 
-    def create_item(self, type, name=None, attributes=None):
+    def create_item(self, type, name=None, attributes={}):
 
         if type is None:
             return None
