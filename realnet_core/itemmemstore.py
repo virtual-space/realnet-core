@@ -68,7 +68,7 @@ class ItemMemStore(ItemStore):
 
     def save(self, path):
         with open(path, 'w') as outfile:
-            json.dump({'types': self.types, 'items': self.items}, outfile)
+            json.dump({'types': [t.to_dict() for t in self.types], 'items': [i.to_dict() for i in self.items]}, outfile)
 
     @classmethod
     def load(cls, path):
