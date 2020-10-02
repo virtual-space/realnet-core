@@ -68,15 +68,37 @@ class ItemMemStore(ItemStore):
         return None
 
     def save(self, path):
+        out_types = {t[0]: {'id': t[1]['id'],
+                            'name': t[1]['name'],
+                            'items': [i['id'] for i in t[1]['items']],
+                            'attributes': t[1]['attributes']} for t in self.types.items()}
+        out_items = {i[0]: {'id': i[1]['id'],
+                            'name': i[1]['name'],
+                            'type': i[1]['type']['id'],
+                            'attributes': i[1]['attributes']} for i in self.items.items()}
         with open(path, 'w') as outfile:
-            json.dump({'types': [t.to_dict() for t in self.types], 'items': [i.to_dict() for i in self.items]}, outfile)
+            json.dump({'types': out_types, 'items': out_items, outfile)
 
     @classmethod
     def load(cls, path):
         if os.path.exists(path):
             with open(path, 'r') as json_file:
                 data = json.load(json_file)
-                return ItemMemStore(data['types'], data['items'])
+                in_types = {t[0]: Type(t[1]['id'],
+                                       t[1]['name'],
+                                       t[1]['items'],
+                                       t[1]['attributes']) for t in data['types'].items()}
+                in_items = {i[0]: Item(i[1]['id'],
+                                       i[1]['name'],
+                                       i[1]['type'],
+                                       i[1]['attributes']) for i in data['items'].items()}
+                for item in in_items:
+                    in_items[item].type = in_types[item]
+
+                for type in in_types:
+                    in_types[type].items = [in_items[item] for item in in_types[type].items]
+
+                return ItemMemStore(in_types, in_items)
         else:
             return ItemMemStore()
 
