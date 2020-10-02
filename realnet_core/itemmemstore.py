@@ -16,7 +16,7 @@ class ItemMemStore(ItemStore):
         references = []
         if items:
             references = [existing for existing in [self.items.get(item.id) for item in items] if existing]
-        id = uuid.uuid4()
+        id = str(uuid.uuid4())
         new = Type(id, name, references, attributes)
         self.types[id] = new
         return new
@@ -43,7 +43,7 @@ class ItemMemStore(ItemStore):
         if type is None:
             return None
 
-        id = uuid.uuid4()
+        id = str(uuid.uuid4())
         new = Item(id, name if name else type.name, type, attributes)
         self.items[id] = new
 
