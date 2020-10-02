@@ -68,14 +68,14 @@ class ItemMemStore(ItemStore):
         return None
 
     def save(self, path):
-        out_types = {t[0]: {'id': t[1]['id'],
-                            'name': t[1]['name'],
-                            'items': [i['id'] for i in t[1]['items']],
-                            'attributes': t[1]['attributes']} for t in self.types.items()}
-        out_items = {i[0]: {'id': i[1]['id'],
-                            'name': i[1]['name'],
-                            'type': i[1]['type']['id'],
-                            'attributes': i[1]['attributes']} for i in self.items.items()}
+        out_types = {t[0]: {'id': t[1].id,
+                            'name': t[1].name,
+                            'items': [i.id for i in t[1].items],
+                            'attributes': t[1].attributes} for t in self.types.items()}
+        out_items = {i[0]: {'id': i[1].id,
+                            'name': i[1].name,
+                            'type': i[1].type.id,
+                            'attributes': i[1].attributes} for i in self.items.items()}
         with open(path, 'w') as outfile:
             json.dump({'types': out_types, 'items': out_items}, outfile)
 
