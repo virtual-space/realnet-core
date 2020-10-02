@@ -12,7 +12,7 @@ class ItemMemStore(ItemStore):
         self.types = types
         self.items = items
 
-    def create_type(self, name, items=None, data=None, attributes=None):
+    def create_type(self, name, items=None, data=None, attributes={}):
         references = []
         if items:
             references = [existing for existing in [self.items.get(item.id) for item in items] if existing]
